@@ -2,7 +2,7 @@ import { Model, DataTypes } from 'sequelize';
 import db from '.';
 import IUser from '../../interfaces/user.interface';
 
-class UsersModel extends Model implements IUser<number> {
+class UsersModel extends Model implements IUser {
   id!: number;
   username!: string;
   role!: string;
@@ -22,6 +22,7 @@ UsersModel.init({
   email: DataTypes.STRING,
   password: DataTypes.STRING,
 }, {
+  tableName: 'users',
   sequelize: db,
   underscored: true,
   timestamps: false,

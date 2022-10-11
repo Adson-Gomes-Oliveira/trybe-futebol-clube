@@ -1,7 +1,9 @@
-export default interface IUser<T> {
-  id?: T;
+interface IUser {
+  id?: number;
   username: string;
   role: string;
   email: string;
-  password: string;
-};
+  password?: string;
+}
+
+export default IUser;
