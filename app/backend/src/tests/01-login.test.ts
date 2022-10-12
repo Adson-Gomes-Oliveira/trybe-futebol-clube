@@ -1,12 +1,8 @@
-import * as sinon from 'sinon';
 import * as chai from 'chai';
 // @ts-ignore
 import chaiHttp = require('chai-http');
 
 import { app } from '../app';
-import Example from '../database/models/ExampleModel';
-
-import { Response } from 'superagent';
 import { FAILED_LOGIN_MOCK, SUCCESSFULLY_LOGIN_MOCK } from './mocks';
 
 chai.use(chaiHttp);
@@ -36,7 +32,8 @@ describe('Testing the /login route', () => {
       expect(missingLoginRequest.body).to.have.property('message');
       expect(missingLoginRequest.body.message).to.be.string('All fields must be filled');
     });
-
+  });
+  describe('/GET', () => {
     it('Validation of user token on /login/validate route works', async () => {
       const loginRequest = await chai.request(app).post('/login').send(SUCCESSFULLY_LOGIN_MOCK);
       const validateToken = await chai.request(app).get('/login/validate').set('authorization', loginRequest.body.token);
