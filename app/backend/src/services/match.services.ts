@@ -17,6 +17,19 @@ class MatchServices {
 
     return { data: response, code: HttpStatus.OK };
   }
+
+  public async getAllMatchesInProgress(query: boolean)
+  : Promise<IResult> {
+    const response = await this.model.findAll({
+      include: [
+        { model: TeamsModel, as: 'teamHome', attributes: { exclude: ['id'] } },
+        { model: TeamsModel, as: 'teamAway', attributes: { exclude: ['id'] } },
+      ],
+      where: { inProgress: query },
+    });
+
+    return { data: response, code: HttpStatus.OK };
+  }
 }
 
 export default MatchServices;

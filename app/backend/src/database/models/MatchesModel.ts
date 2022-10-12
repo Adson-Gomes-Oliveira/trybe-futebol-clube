@@ -9,7 +9,7 @@ class MatchesModel extends Model implements IMatch {
   homeTeamGoals!: number;
   awayTeam!: number;
   awayTeamGoals!: number;
-  inProgress!: number;
+  inProgress!: boolean;
 }
 
 MatchesModel.init({
@@ -23,7 +23,7 @@ MatchesModel.init({
   homeTeamGoals: DataTypes.INTEGER,
   awayTeam: DataTypes.INTEGER,
   awayTeamGoals: DataTypes.INTEGER,
-  inProgress: DataTypes.INTEGER,
+  inProgress: DataTypes.BOOLEAN,
 }, {
   tableName: 'matches',
   sequelize: db,
