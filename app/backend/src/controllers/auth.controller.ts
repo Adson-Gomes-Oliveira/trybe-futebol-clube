@@ -1,5 +1,4 @@
 import { Request, Response, NextFunction } from 'express';
-import IUser from '../interfaces/user.interface';
 import ManageToken from '../helper/jwt.helper';
 import ILogin from '../interfaces/login.interface';
 import AuthServices from '../services/auth.services';
