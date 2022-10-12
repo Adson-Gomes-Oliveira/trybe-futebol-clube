@@ -1,7 +1,7 @@
 import { Model, FindOptions, Identifier } from 'sequelize';
 
 interface IModel<T extends Model> {
-  findAll(): Promise<T[]>;
+  findAll(options?: FindOptions): Promise<T[]>;
   findByPk(ID: Identifier): Promise<T | null>
   findOne(options: FindOptions): Promise<T | null>;
 }

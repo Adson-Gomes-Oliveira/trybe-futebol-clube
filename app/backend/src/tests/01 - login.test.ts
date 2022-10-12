@@ -9,7 +9,7 @@ chai.use(chaiHttp);
 
 const { expect } = chai;
 
-describe('Testing the /login route', () => {
+describe('Testing /login route', () => {
   describe('/POST', () => {
     it('Login throught /login route is possible', async () => {
       const loginRequest = await chai.request(app).post('/login').send(SUCCESSFULLY_LOGIN_MOCK);

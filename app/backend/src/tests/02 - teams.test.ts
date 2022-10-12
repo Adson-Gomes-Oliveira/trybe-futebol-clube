@@ -9,7 +9,7 @@ chai.use(chaiHttp);
 
 const { expect } = chai;
 
-describe('Testing the /teams route', () => {
+describe('Testing /teams route', () => {
   describe('/GET', () => {
     it('Request on /teams route returns all teams from database', async () => {
       const teamsRequest = await chai.request(app).get('/teams');
