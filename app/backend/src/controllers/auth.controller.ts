@@ -20,21 +20,21 @@ class AuthController {
   }
 
   static async authorizationMiddleware(req: Request, res: Response, next: NextFunction)
-    : Promise<void> {
-      const { authorization } = req.headers;
+  : Promise<void> {
+    const { authorization } = req.headers;
 
-      if(!authorization) {
-        const err = new Error('Token is required');
-        err.name = 'MISSING_TOKEN';
-        err.stack = HttpStatus.UNAUTHORIZED.toString();
-        throw err;
-      }
-
-      const validation = ManageToken.isValid(authorization as string);
-      res.locals = validation;
-
-      next();
+    if(!authorization) {
+      const err = new Error('Token is required');
+      err.name = 'MISSING_TOKEN';
+      err.stack = HttpStatus.UNAUTHORIZED.toString();
+      throw err;
     }
+
+    const validation = ManageToken.isValid(authorization as string);
+    res.locals = validation;
+
+    next();
+  }
 
   public async validateLogin(req: Request, res: Response)
   : Promise<Response> {

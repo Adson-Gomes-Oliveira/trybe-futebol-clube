@@ -8,5 +8,6 @@ const newService = new TeamServices(TeamsModel);
 const newController = new TeamController(newService);
 
 router.get('/', newController.getAll);
+router.get('/:id', newController.getByID);
 
 export default router;
