@@ -7,6 +7,7 @@ const router = express.Router();
 const newService = new AuthServices(UsersModel);
 const newController = new AuthController(newService);
 
+router.get('/validate', newController.validateLogin)
 router.post('/', newController.signIn);
 
 export default router;

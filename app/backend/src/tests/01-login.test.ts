@@ -38,10 +38,23 @@ describe('Testing the /login route', () => {
     });
 
     it('Validation of user token on /login/validate route works', async () => {
-      const validateToken = await chai.request(app).get('/login/validate');
+      const loginRequest = await chai.request(app).post('/login').send(SUCCESSFULLY_LOGIN_MOCK);
+      const validateToken = await chai.request(app).get('/login/validate').set('authorization', loginRequest.body.token);
       expect(validateToken.status).to.be.equal(200);
       expect(validateToken.body).to.have.property('role');
       expect(validateToken.body.role).to.be.string('admin' || 'user');
+    });
+
+    it('Validation of user token on /login/validate returns a 500 code if token is invalid', async () => {
+      await chai.request(app).post('/login').send(SUCCESSFULLY_LOGIN_MOCK);
+      const validateToken = await chai.request(app).get('/login/validate').set('authorization', 'sometoken');
+      expect(validateToken.status).to.be.equal(500);
+    });
+
+    it('Validation of user token on /login/validate returns a 400 code if token is missing', async () => {
+      await chai.request(app).post('/login').send(SUCCESSFULLY_LOGIN_MOCK);
+      const validateToken = await chai.request(app).get('/login/validate');
+      expect(validateToken.status).to.be.equal(400);
     });
   });
 });
