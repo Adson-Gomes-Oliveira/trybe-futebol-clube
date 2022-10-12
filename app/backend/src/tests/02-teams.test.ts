@@ -10,10 +10,12 @@ const { expect } = chai;
 
 describe('Testing the /teams route', () => {
   describe('/GET', () => {
-    it('A Get request on /teams route returns all teams from database', async () => {
+    it('Request on /teams route returns all teams from database', async () => {
       const teamsRequest = await chai.request(app).get('/teams');
       expect(teamsRequest.status).to.be.equal(200);
-      expect(teamsRequest.body).to.be.instanceOf(ITeams[]);
+      expect(teamsRequest.body).to.be.instanceOf(Array);
+      expect(teamsRequest.body[0]).to.have.property('id');
+      expect(teamsRequest.body[0]).to.have.property('teamName');
     });
   });
 });
