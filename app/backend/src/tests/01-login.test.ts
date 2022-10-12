@@ -22,16 +22,26 @@ describe('Testing the /login route', () => {
       expect(loginRequest.body.token).to.be.a('string');
     });
 
-    it('Login throught /login route is not possible when credentials are wrong or missing', async () => {
-      const { email:_, FAILED_MOCK_WITHOUT_EMAIL } = FAILED_LOGIN_MOCK as any;
+    it('Login throught /login route is not possible when credentials are wrong', async () => {
       const wrongLoginRequest = await chai.request(app).post('/login').send(FAILED_LOGIN_MOCK);
-      const missingLoginRequest = await chai.request(app).post('/login').send(FAILED_MOCK_WITHOUT_EMAIL);
       expect(wrongLoginRequest.status).to.be.equal(401);
-      expect(missingLoginRequest.status).to.be.equal(400);
       expect(wrongLoginRequest.body).to.have.property('message');
-      expect(missingLoginRequest.body).to.have.property('message');
       expect(wrongLoginRequest.body.message).to.be.string('Incorrect email or password');
+    });
+
+    it('Login throught /login route is not possible when credentials are missing', async () => {
+      const { email:_, FAILED_MOCK_WITHOUT_EMAIL } = FAILED_LOGIN_MOCK as any;
+      const missingLoginRequest = await chai.request(app).post('/login').send(FAILED_MOCK_WITHOUT_EMAIL);
+      expect(missingLoginRequest.status).to.be.equal(400);
+      expect(missingLoginRequest.body).to.have.property('message');
       expect(missingLoginRequest.body.message).to.be.string('All fields must be filled');
+    });
+
+    it('Validation of user token on /login/validate route works', async () => {
+      const validateToken = await chai.request(app).get('/login/validate');
+      expect(validateToken.status).to.be.equal(200);
+      expect(validateToken.body).to.have.property('role');
+      expect(validateToken.body.role).to.be.string('admin' || 'user');
     });
   });
 });
