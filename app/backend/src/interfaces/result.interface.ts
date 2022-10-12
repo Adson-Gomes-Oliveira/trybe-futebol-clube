@@ -1,8 +1,9 @@
 import HttpStatus from '../helper/httpStatus.helper';
+import ITeam from './team.interface';
 import IUser from './user.interface';
 
 interface IResult {
-  data?: string | IUser | IUser[];
+  data?: string | IUser | IUser[] | ITeam | ITeam[];
   code: HttpStatus;
   message?: string;
 }
