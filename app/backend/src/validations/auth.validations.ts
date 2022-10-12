@@ -10,7 +10,7 @@ class AuthValidations {
       password: JOI.string().min(6).required(),
     }).validate(payload);
 
-    if (error) return { message: error.details[0].message, code: HttpStatus.BAD_REQUEST };
+    if (error) return { message: 'All fields must be filled', code: HttpStatus.BAD_REQUEST };
     return null;
   }
 }

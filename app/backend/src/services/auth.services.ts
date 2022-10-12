@@ -23,16 +23,16 @@ class AuthServices {
 
     const findUser = await this.model.findOne({ where: { email: payload.email } });
     if (!findUser) {
-      const err = new Error('Email not found!');
-      err.name = 'INVALID_EMAIL';
+      const err = new Error('Incorrect email or password');
+      err.name = 'INVALID_CREDENTIALS';
       err.stack = HttpStatus.UNAUTHORIZED.toString();
       throw err;
     };
 
     const isValidPassword = compareSync(payload.password, findUser.password as string);
     if (!isValidPassword) {
-      const err = new Error('Wrong Password!');
-      err.name = 'INVALID_PASSWORD';
+      const err = new Error('Incorrect email or password');
+      err.name = 'INVALID_CREDENTIALS';
       err.stack = HttpStatus.UNAUTHORIZED.toString();
       throw err;
     };
