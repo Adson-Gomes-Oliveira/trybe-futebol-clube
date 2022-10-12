@@ -4,6 +4,7 @@ import chaiHttp = require('chai-http');
 
 import { app } from '../app';
 import { TEAM_ID_MOCK } from './mocks';
+import MatchesModel from '../database/models/MatchesModel';
 
 chai.use(chaiHttp);
 
@@ -15,7 +16,8 @@ describe('Testing /matches route', () => {
       const matchesRequest = await chai.request(app).get('/matches');
       expect(matchesRequest.status).to.be.equal(200);
       expect(matchesRequest.body).to.be.instanceOf(Array);
-      expect(matchesRequest.body[0]).to.be.instanceOf(MatchesModel);
+      expect(matchesRequest.body[0]).to.have.property('teamHome');
+      expect(matchesRequest.body[0]).to.have.property('teamAway');
     });
   });
 });

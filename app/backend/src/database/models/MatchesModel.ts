@@ -25,7 +25,7 @@ MatchesModel.init({
   awayTeamGoals: DataTypes.INTEGER,
   inProgress: DataTypes.INTEGER,
 }, {
-  tableName: 'macthes',
+  tableName: 'matches',
   sequelize: db,
   underscored: true,
   timestamps: false,
