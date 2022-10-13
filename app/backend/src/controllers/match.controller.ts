@@ -6,6 +6,7 @@ class MatchController {
   constructor(private services: MatchServices) {
     this.getAll = this.getAll.bind(this);
     this.createMatch = this.createMatch.bind(this);
+    this.finishMatch = this.finishMatch.bind(this);
   }
 
   public async getAll(req: Request, res: Response)
@@ -28,6 +29,14 @@ class MatchController {
 
     const response = await this.services.createMatch(payload);
     return res.status(response.code).json(response.data);
+  }
+
+  public async finishMatch(req: Request, res: Response)
+  : Promise<Response> {
+    const response = await this.services.finishMatch(Number(req.params.id));
+    return res.status(response.code).json({
+      message: response.message
+    });
   }
 }
 

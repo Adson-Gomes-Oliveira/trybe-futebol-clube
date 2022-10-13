@@ -14,6 +14,12 @@ class MatchValidation {
     }).validate(payload);
 
     if (error) return { message: error.details[0].message, code: HttpStatus.BAD_REQUEST };
+    if (payload.homeTeam === payload.awayTeam) {
+      return {
+        message: 'It is not possible to create a match with two equal teams',
+        code: HttpStatus.UNAUTHORIZED,
+      };
+    }
     return null;
   }
 }

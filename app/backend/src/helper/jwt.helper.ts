@@ -15,8 +15,15 @@ class ManageToken {
   }
 
   static isValid(token: string): JWTPayload {
-    const validToken = JWT.verify(token, process.env.JWT_SECRET as JWT.Secret) as JWTPayload;
-    return validToken;
+    try {
+      const validToken = JWT.verify(token, process.env.JWT_SECRET as JWT.Secret) as JWTPayload;
+      return validToken;
+    } catch (error) {
+      const err = new Error('Token must be a valid token');
+      err.name = 'NOT_AUTHORIZED';
+      err.stack = HttpStatus.UNAUTHORIZED.toString();
+      throw err;
+    }
   }
 }
 

@@ -44,8 +44,23 @@ class MatchServices {
       throw err;
     }
 
+    const verifyIDHome = await this.model.findByPk(payload.homeTeam);
+    const verifyIDAway = await this.model.findByPk(payload.awayTeam);
+
+    if (verifyIDHome === null || verifyIDAway === null) {
+      const err = new Error('There is no team with such id!');
+      err.name = 'INVALID_PAYLOAD';
+      err.stack = HttpStatus.NO_CONTENT.toString();
+      throw err;
+    }
+
     const response = await this.model.create(payload);
     return { data: response, code: HttpStatus.CREATED };
+  }
+
+  public async finishMatch(ID: number): Promise<IResult> {
+    await this.model.update({ inProgress: false }, { where: { id: ID } });
+    return { message: 'Finished', code: HttpStatus.OK };
   }
 }
 

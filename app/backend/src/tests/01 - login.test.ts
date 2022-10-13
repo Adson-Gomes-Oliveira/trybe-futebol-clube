@@ -42,10 +42,10 @@ describe('Testing /login route', () => {
       expect(validateToken.body.role).to.be.string('admin' || 'user');
     });
 
-    it('Validation of user token on /login/validate returns a 500 code if token is invalid', async () => {
+    it('Validation of user token on /login/validate returns a 401 code if token is invalid', async () => {
       await chai.request(app).post('/login').send(SUCCESSFULLY_LOGIN_MOCK);
       const validateToken = await chai.request(app).get('/login/validate').set('authorization', 'sometoken');
-      expect(validateToken.status).to.be.equal(500);
+      expect(validateToken.status).to.be.equal(401);
     });
 
     it('Validation of user token on /login/validate returns a 400 code if token is missing', async () => {
