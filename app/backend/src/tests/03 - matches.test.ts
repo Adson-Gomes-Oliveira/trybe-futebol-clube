@@ -3,7 +3,7 @@ import * as chai from 'chai';
 import chaiHttp = require('chai-http');
 
 import { app } from '../app';
-import { TEAM_ID_MOCK } from './mocks';
+import { FAILED_MATCH_MOCK, SUCCESSFULLY_MATCH_MOCK, TEAM_ID_MOCK } from './mocks';
 import MatchesModel from '../database/models/MatchesModel';
 
 chai.use(chaiHttp);
@@ -34,6 +34,29 @@ describe('Testing /matches route', () => {
       expect(matchesRequest.body).to.be.instanceOf(Array);
       expect(matchesRequest.body[0]).to.have.property('inProgress');
       expect(matchesRequest.body[0].inProgress).to.be.equal(false);
+    });
+  });
+
+  describe('/POST', () => {
+    it('Is possible to save a match in progress on database', async () => {
+      const insertMatchRequest = await chai.request(app).post('/matches').send(SUCCESSFULLY_MATCH_MOCK);
+      expect(insertMatchRequest.status).to.be.equal(201);
+      expect(insertMatchRequest.body).to.have.property('id');
+    });
+
+    it('Is not possible to save a match when the payload is wrong', async () => {
+      const insertMatchRequest = await chai.request(app).post('/matches').send(FAILED_MATCH_MOCK);
+      expect(insertMatchRequest.status).to.be.equal(400);
+      expect(insertMatchRequest.body).to.have.property('message');
+    });
+
+    it('Is not possible to save a match when the home or away team does not exist', async () => {
+      const insertMatchRequest = await chai.request(app).post('/matches').send({
+        ...SUCCESSFULLY_MATCH_MOCK,
+        homeTeam: 999999999,
+      });
+      expect(insertMatchRequest.status).to.be.equal(500);
+      expect(insertMatchRequest.body).to.have.property('message');
     });
   });
 });

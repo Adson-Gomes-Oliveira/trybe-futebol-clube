@@ -8,5 +8,6 @@ const newService = new MatchServices(MatchesModel);
 const newController = new MatchController(newService);
 
 router.get('/', newController.getAll);
+router.post('/', newController.createMatch);
 
 export default router;
