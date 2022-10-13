@@ -10,7 +10,7 @@ class MatchValidation {
       awayTeam: JOI.number().min(1).required(),
       homeTeamGoals: JOI.number().required(),
       awayTeamGoals: JOI.number().required(),
-      inProgress: JOI.boolean().equal(true).required(),
+      inProgress: JOI.boolean().equal(true),
     }).validate(payload);
 
     if (error) return { message: error.details[0].message, code: HttpStatus.BAD_REQUEST };
