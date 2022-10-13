@@ -4,7 +4,6 @@ import chaiHttp = require('chai-http');
 
 import { app } from '../app';
 import { EDIT_MATCH_MOCK, FAILED_MATCH_MOCK, SUCCESSFULLY_LOGIN_MOCK, SUCCESSFULLY_MATCH_MOCK, TEAM_ID_MOCK } from './mocks';
-import MatchesModel from '../database/models/MatchesModel';
 
 chai.use(chaiHttp);
 
