@@ -1,5 +1,6 @@
 import 'express-async-errors';
 import * as express from 'express';
+import * as cors from 'cors';
 import authRoute from './routes/auth.routes';
 import teamRoute from './routes/team.routes';
 import matchRoute from './routes/match.routes';
@@ -26,6 +27,7 @@ class App {
     };
 
     this.app.use(express.json());
+    this.app.use(cors);
     this.app.use(accessControl);
     this.app.use('/login', authRoute);
     this.app.use('/teams', teamRoute);
