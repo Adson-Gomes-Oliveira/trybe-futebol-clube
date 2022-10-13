@@ -3,7 +3,7 @@ import * as chai from 'chai';
 import chaiHttp = require('chai-http');
 
 import { app } from '../app';
-import { FAILED_MATCH_MOCK, SUCCESSFULLY_LOGIN_MOCK, SUCCESSFULLY_MATCH_MOCK, TEAM_ID_MOCK } from './mocks';
+import { EDIT_MATCH_MOCK, FAILED_MATCH_MOCK, SUCCESSFULLY_LOGIN_MOCK, SUCCESSFULLY_MATCH_MOCK, TEAM_ID_MOCK } from './mocks';
 import MatchesModel from '../database/models/MatchesModel';
 
 chai.use(chaiHttp);
@@ -100,6 +100,17 @@ describe('Testing /matches route', () => {
       expect(finishMatch.status).to.be.equal(200);
       expect(finishMatch.body).to.have.property('message');
       expect(finishMatch.body.message).to.be.string('Finished');
+    });
+
+    it('Is possible update a match on /matches/:id route', async () => {
+      const loginMatch = await chai.request(app).post('/login').send(SUCCESSFULLY_LOGIN_MOCK);
+      const editMatch = await chai.request(app).patch('/matches/42').send(EDIT_MATCH_MOCK)
+        .set('authorization', loginMatch.body.token);
+      
+      expect(editMatch.status).to.be.equal(200);
+      expect(editMatch.body).to.have.property('id');
+      expect(editMatch.body.homeTeamGoals).to.be.equal(5);
+      expect(editMatch.body.awayTeamGoals).to.be.equal(5);
     });
   });
 });

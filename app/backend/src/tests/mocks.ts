@@ -22,3 +22,7 @@ export const FAILED_MATCH_MOCK = {
   awayTeamGoals: 2,
   inProgress: true,
 };
+export const EDIT_MATCH_MOCK = {
+  homeTeamGoals: 5,
+  awayTeamGoals: 5,
+}

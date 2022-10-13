@@ -7,6 +7,7 @@ class MatchController {
     this.getAll = this.getAll.bind(this);
     this.createMatch = this.createMatch.bind(this);
     this.finishMatch = this.finishMatch.bind(this);
+    this.updateMatch = this.updateMatch.bind(this);
   }
 
   public async getAll(req: Request, res: Response)
@@ -37,6 +38,14 @@ class MatchController {
     return res.status(response.code).json({
       message: response.message
     });
+  }
+
+  public async updateMatch(req: Request, res: Response)
+  : Promise<Response> {
+    const payload = req.body as IMatch;
+    
+    const response = await this.services.updateMatch(Number(req.params.id), payload);
+    return res.status(response.code).json(response.data);
   }
 }
 
