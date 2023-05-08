@@ -74,8 +74,6 @@ npx sequelize-cli db:seed:all
 <h4>INFORMAÇÕES ADICIONAIS</h4>
 
 - Projeto concluído em: 13/10/2022
-- Alguma informação 2
-- Alguma informação 3
 <br />
 
 ---
